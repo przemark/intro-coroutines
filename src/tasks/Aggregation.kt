@@ -16,3 +16,9 @@ TODO: Write aggregation code.
 */
 fun List<User>.aggregate(): List<User> =
     this
+        .groupBy { it.login }
+//        .mapValues {
+//            User(it.key, it.value.sumBy { user -> user.contributions })
+//        }.values.sortedByDescending { it.contributions }
+        .map { (login, group) -> User(login, group.sumBy { it.contributions }) }
+        .sortedByDescending { it.contributions }
